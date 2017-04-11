@@ -11,7 +11,7 @@ while yn not in "nN":
 
 while True:
     yn=raw_input('continue?(y/n)')
-    if yn in "yY":
+    if yn not in "yY":
         break
     else:
         print "working..."
