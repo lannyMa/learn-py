@@ -13,5 +13,4 @@ while True:
     yn=raw_input('continue?(y/n)')
     if yn not in "yY":
         break
-    else:
-        print "working..."
+    print "working..."
