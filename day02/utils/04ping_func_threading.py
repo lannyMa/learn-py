@@ -6,7 +6,7 @@ import threading
 
 def ping(ip)::
     result=os.system("ping -c2 %s > /dev/null 2>&1"%ip)
-    if result:
+    if not result:
         print '%s is up'%ip
     else:
         print '%s is down'%ip

@@ -6,7 +6,7 @@ import os
 
 def ping(ip):
     result=os.system("ping -c2 %s > /dev/null 2>&1"%ip)
-    if result:
+    if not result:
         return '%s is up'%ip
     else:
         return '%s is down'%ip

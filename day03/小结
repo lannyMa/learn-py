@@ -1,0 +1,38 @@
+前两天的一个小结:
+
+
+
+输入输出
+数据类型分类
+    存储
+      标量
+      容器
+    访问
+      直接
+      顺序
+      映射
+
+if
+elif
+else
+
+while True:
+    break
+    continue
+else
+
+for i in range(10):
+         xrange
+else:
+
+函数
+  return
+模块
+  __name__
+  __file__
+
+
+
+关键字:
+keyword.kwlist
+keyword.iskeyword 判断
