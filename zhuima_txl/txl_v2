@@ -1,0 +1,152 @@
+#!/usr/bin/env python
+# coding=utf-8
+
+'''
+用户执行:
+    打印菜单,用户选择对应功能
+    执行功能返回结果后
+    继续打印菜单
+'''
+import os
+
+import pickle
+
+txl = []
+fname = 'txl.db'
+
+
+def menu():
+    print('''
+    0: txl_exit,
+    1: txl_add,
+    2: txl_del,
+    3: txl_update,
+    4: txl_display,
+    5: txl_sort
+    ''')
+    op = input("You want to do? > ")
+    return op
+
+
+def txl_add():
+    '''txl_add通讯录
+        组装用户信息为字典,然后添加到txl=[]
+    '''
+    name = input("name: ")
+    age = input("age: ")
+    gender = input("gender: ")
+    tel = input("tel: ")
+
+    reco = {
+        'name': name,
+        'age': age,
+        'gender': gender,
+        'tel': tel,
+    }
+    txl.append(reco)
+    txl_save()
+    print("添加用户成功")
+
+
+def txl_display():
+    '''
+    to display txl info
+    :return:
+    '''
+    txl_display_format(txl)
+
+
+def txl_display_format(infos):
+    if len(infos) > 0:
+        print("name \t age \t gender \t tel")
+        print("-------------------------------------")
+        for line in infos:
+            print("%(name)s \t %(age)s \t %(gender)s \t %(tel)s" % line)
+
+
+def txl_update():
+    flag = 0
+    if len(txl) > 0:
+        name = input("the name you want to update: ")
+        for line in txl:
+            if line['name'] == name:
+                old_age = line['age']
+                old_gender = line['gender']
+                old_tel = line['tel']
+                txl.remove(line)
+                flag = 1
+                break
+        else:
+            print("查无此人")
+        if flag == 1:
+            new_age = input("age: ")
+            new_gender = input("gender: ")
+            new_tel = input("tel: ")
+
+            info = {}
+            info['name'] = name
+            if new_age:
+                info['age'] = new_age
+            else:
+                info['age'] = old_age
+            if new_gender:
+                info['gender'] = new_gender
+            else:
+                info['gender'] = old_gender
+            if new_tel:
+                info['tel'] = new_tel
+            else:
+                info['tel'] = old_tel
+            txl.append(info)
+            txl_save()
+
+def txl_save():
+    '''
+    txl save to json file
+    :return;
+    '''
+    s = pickle.dumps(txl)
+    with open(fname, 'wb') as f:
+        f.write(s)
+
+
+def txl_load():
+    '''
+    load txl to txl[]
+    :return:
+    '''
+    with open(fname, 'rb') as f:
+        s = f.read()
+    global txl
+    txl = pickle.loads(s)
+
+
+def txl_exit():
+    os._exit(0)
+
+
+def txl_error():
+    print("暂没开放这个功能")
+
+
+ops = {
+    '0': txl_exit,
+    '1': txl_add,
+    # '2': txl_del,
+    '3': txl_update,
+    '4': txl_display,
+    # '5': txl_sort
+}
+
+
+def main():
+    while True:
+        op = menu()
+        if op in "0123456":
+            ops.get(op, txl_error)()
+
+
+txl_load()
+
+if __name__ == '__main__':
+    main()
